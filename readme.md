@@ -1,4 +1,4 @@
 # Passport.js with express
 
-* [passport-local](./summary/passportlocal.md) study
+* ## *[passport-local study summary](./summary/passportlocal.md)*
 
