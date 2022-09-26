@@ -1,9 +1,10 @@
 const db = require('mysql');
+require('dotenv').config()
 const createDB = db.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"root",
-    database:"passport_test"
+    host:process.env.db_host,
+    user:process.env.db_user,
+    password:process.env.db_password,
+    database:process.env.db_database
 })
 
 module.exports = createDB;
