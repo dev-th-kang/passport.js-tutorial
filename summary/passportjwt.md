@@ -17,3 +17,20 @@
     이라는 미들웨어를 실행시켜준다. client에서 저장한 token값에 대조되는 아이디가 있다면, 그 아이디의 정보를 return 해준다.
 
       * 단점: Access 토큰은 만료기간이 길어지면, 탈취로 인해서 보안성 문제가 생길 수 있음 
+
+* Refresh Token (Access Token의 단점을 극복하기 위해서 만들어진 개념)
+1. User가 Login 을 시도한다.
+  * AccessToken과 RefreshToken 을 발행한다.
+  * RefreshToken은 서버에 저장하고 AccessToken만 클라이언트에게 넘긴다.
+2. User가 Protected한 Page에 접근을 하려고한다.
+  * JWT 인증절차 진행
+    * refresh Token과 Access Token이 모두 만료됬을 때
+      * 로그인 다시 시도해달라고 클라이언트에 요청
+    * Access Token만 만료됬을 때
+      * refresh Token을 조회후, 만료되지않으면, AccessToken 을 새롭게 재발행한다.
+    * 이상한 Token 값일 때
+      * 로그인 다시 시도해달라고 클라이언트에 요청
+    * Token-Type이 다를 때
+      * 로그인 다시 시도해달라고 클라이언트에 요청
+
+``` refreshToken은 expireIn 이 길어야하고, AccessToken은 expireIn이 짧아야한다.```

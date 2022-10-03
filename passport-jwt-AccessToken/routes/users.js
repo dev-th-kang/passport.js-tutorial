@@ -7,7 +7,9 @@ var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = "Random string";
 
-
+route.post('/',(req,res)=>{
+    console.log("a");
+})
 route.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
     res.send('login good!');
 })
@@ -15,7 +17,7 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     console.log(jwt_payload)
     const username = jwt_payload.username;
     const userid = jwt_payload.userid;
-    
+    console.log("a")
     const sql = `select * from userinfo where userid = "${userid}"`;
     db.query(sql,(err,rows)=>{
         

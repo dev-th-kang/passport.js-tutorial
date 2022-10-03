@@ -36,7 +36,6 @@ router.get('/',(req,res,next)=>{
 
         try{
             const myToken = verifyToken(tokenValue);
-            console.log(myToken)
             if(myToken == "jwt expired"){
                 const userinfo = jwt.decode(tokenValue,"secret");
                 const userid = userinfo.userid;
@@ -57,17 +56,20 @@ router.get('/',(req,res,next)=>{
                     }
                 })
             }else{
+                
                 const userid = jwt.verify(tokenValue,"secret");
                 const sql = `select * from tokenSave where userid = "${userid}"`;
+                console.log("a")
                 db.query(sql,(err, rows)=>{
                     res.status(200).send({
                         "msg":"login Good"
                     })
                 })
             }
-        }catch{
+        }catch(err){
+            console.log(err);
             res.send({
-                errMsg : "3로그인 필요합니다."
+                errMsg : "222로그인 필요합니다."
             })
         }
 
@@ -78,8 +80,8 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     const sql = `select * from userinfo where userid = "${jwt_payload.userid}"`
     db.query(sql,(err,rows)=>{
         if(err) done(null,false);
-        if(rows.length){
-            return done(null,rows[0].userid);
+        if(rows[0]){
+            return done(null,rows[0]);
         }else{
             return done(null,false);
         }
